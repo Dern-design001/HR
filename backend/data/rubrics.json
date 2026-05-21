@@ -1,0 +1,111 @@
+{
+  "rubrics": [
+    {
+      "id": "star_method",
+      "name": "STAR Method",
+      "weight": 0.40,
+      "max_points": 40,
+      "description": "Evaluates whether the answer follows the Situation-Task-Action-Result framework. A strong behavioral answer clearly describes the context, the candidate's specific responsibility, the concrete actions taken, and the measurable outcome.",
+      "components": {
+        "situation": {
+          "description": "Clear description of the context, background, and setting.",
+          "keywords": ["when", "at", "during", "while", "working at", "in my role", "the project", "the team", "the company"]
+        },
+        "task": {
+          "description": "Specific responsibility or challenge the candidate faced.",
+          "keywords": ["my responsibility", "I was tasked", "I needed to", "my goal was", "I had to", "my role was", "I was asked"]
+        },
+        "action": {
+          "description": "Concrete steps the candidate personally took.",
+          "keywords": ["I did", "I implemented", "I created", "I led", "I communicated", "I decided", "I built", "I organized", "I reached out", "I analyzed"]
+        },
+        "result": {
+          "description": "Measurable outcome or impact of the actions.",
+          "keywords": ["as a result", "which led to", "the outcome was", "we achieved", "increased", "decreased", "improved", "saved", "delivered", "reduced", "grew", "percent", "%"]
+        }
+      },
+      "scoring_guide": {
+        "1": "Answer is vague with no clear structure. Missing most STAR components.",
+        "2": "Answer has 1-2 STAR components but lacks specificity or completeness.",
+        "3": "Answer covers 3 STAR components adequately but one is weak or missing.",
+        "4": "Answer covers all 4 STAR components clearly with good specificity.",
+        "5": "Answer perfectly follows STAR with rich detail, specific metrics, and compelling narrative."
+      }
+    },
+    {
+      "id": "specificity",
+      "name": "Specificity",
+      "weight": 0.20,
+      "max_points": 20,
+      "description": "Evaluates whether the answer uses concrete, specific examples rather than vague generalities. Strong answers include numbers, names, timeframes, and specific details rather than abstract statements.",
+      "indicators": {
+        "high_specificity": ["specific numbers", "percentages", "timeframes", "team sizes", "project names", "tool names", "dollar amounts", "dates"],
+        "low_specificity": ["usually", "sometimes", "often", "generally", "we always", "I tend to", "in general", "typically", "kind of", "sort of"]
+      },
+      "scoring_guide": {
+        "1": "Answer is entirely vague with no specific details, numbers, or concrete examples.",
+        "2": "Answer has minimal specifics — one or two details but mostly general statements.",
+        "3": "Answer has some specific details but could be more concrete in key areas.",
+        "4": "Answer is mostly specific with good use of numbers, names, and concrete examples.",
+        "5": "Answer is highly specific throughout — rich with metrics, names, timeframes, and concrete details."
+      }
+    },
+    {
+      "id": "relevance",
+      "name": "Relevance",
+      "weight": 0.20,
+      "max_points": 20,
+      "description": "Evaluates whether the answer directly addresses the question asked and stays on topic. Strong answers are tightly focused on the competency being assessed without going off on tangents.",
+      "scoring_guide": {
+        "1": "Answer does not address the question. Completely off-topic or misunderstood the question.",
+        "2": "Answer partially addresses the question but drifts significantly off-topic.",
+        "3": "Answer addresses the question but includes some irrelevant information.",
+        "4": "Answer is mostly relevant and focused on the question with minor tangents.",
+        "5": "Answer is perfectly relevant, directly addresses the question, and demonstrates the target competency clearly."
+      }
+    },
+    {
+      "id": "communication_clarity",
+      "name": "Communication Clarity",
+      "weight": 0.10,
+      "max_points": 10,
+      "description": "Evaluates the clarity, structure, and coherence of the answer. Strong answers are well-organized, easy to follow, use appropriate vocabulary, and avoid excessive filler words or rambling.",
+      "indicators": {
+        "positive": ["clear structure", "logical flow", "concise", "well-organized", "appropriate vocabulary"],
+        "negative": ["rambling", "repetitive", "unclear", "disorganized", "excessive filler words"]
+      },
+      "scoring_guide": {
+        "1": "Answer is very difficult to follow — disorganized, rambling, or incoherent.",
+        "2": "Answer has significant clarity issues — hard to follow in places.",
+        "3": "Answer is reasonably clear but could be better organized or more concise.",
+        "4": "Answer is clear and well-organized with good vocabulary.",
+        "5": "Answer is exceptionally clear, concise, well-structured, and compelling."
+      }
+    },
+    {
+      "id": "self_awareness",
+      "name": "Self-Awareness",
+      "weight": 0.10,
+      "max_points": 10,
+      "description": "Evaluates whether the candidate demonstrates reflection, learning, and growth mindset. Strong answers acknowledge challenges, lessons learned, and what the candidate would do differently.",
+      "indicators": {
+        "positive": ["I learned", "I realized", "looking back", "I would do differently", "I grew", "I improved", "I recognized", "I reflected"],
+        "negative": ["everything went perfectly", "I had no issues", "it was easy", "no challenges"]
+      },
+      "scoring_guide": {
+        "1": "No self-reflection. Answer presents a perfect narrative with no acknowledgment of challenges or learning.",
+        "2": "Minimal self-awareness — brief mention of a challenge but no real reflection.",
+        "3": "Some self-awareness — acknowledges a challenge or lesson but doesn't go deep.",
+        "4": "Good self-awareness — reflects on what was learned and how they grew.",
+        "5": "Excellent self-awareness — deeply reflective, acknowledges mistakes, articulates specific lessons and growth."
+      }
+    }
+  ],
+  "score_bands": {
+    "excellent": {"min": 85, "max": 100, "label": "Excellent", "color": "#22c55e", "description": "Outstanding answer demonstrating strong competency."},
+    "good": {"min": 70, "max": 84, "label": "Good", "color": "#84cc16", "description": "Solid answer with minor areas for improvement."},
+    "average": {"min": 55, "max": 69, "label": "Average", "color": "#eab308", "description": "Adequate answer but needs more depth and specificity."},
+    "below_average": {"min": 40, "max": 54, "label": "Below Average", "color": "#f97316", "description": "Answer lacks key elements and needs significant improvement."},
+    "poor": {"min": 0, "max": 39, "label": "Poor", "color": "#ef4444", "description": "Answer does not adequately address the question."}
+  }
+}

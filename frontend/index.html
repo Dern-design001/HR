@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Interview Simulator — PRJ-026</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="nav-icon">🎯</span>
+    <span class="nav-title">HR Interview Simulator</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home"     class="nav-link active" data-page="home">Home</a></li>
+    <li><a href="#practice" class="nav-link"        data-page="practice">Practice</a></li>
+    <li><a href="#history"  class="nav-link"        data-page="history">History</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+</nav>
+
+<!-- ── PAGES ────────────────────────────────────────────────────────────────── -->
+<main class="main-content">
+
+  <!-- HOME PAGE -->
+  <section id="page-home" class="page active">
+    <div class="hero">
+      <div class="hero-badge">PRJ-026 · GenAI · Careers</div>
+      <h1 class="hero-title">Master Your<br><span class="gradient-text">Behavioral Interview</span></h1>
+      <p class="hero-sub">AI-powered practice with rubric-based scoring, STAR method coaching, and personalised feedback reports.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" onclick="showPage('practice')">🚀 Start Practice</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">30+</div><div class="stat-label">Questions</div></div>
+      <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Competencies</div></div>
+      <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Rubric Criteria</div></div>
+      <div class="stat-card"><div class="stat-num">AI</div><div class="stat-label">Powered Feedback</div></div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⏱</div>
+        <h3>Timed Answer Flow</h3>
+        <p>Practice under real interview pressure with a configurable countdown timer per question.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Rubric-Based Scoring</h3>
+        <p>Every answer is scored on STAR method, specificity, relevance, clarity, and self-awareness.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3>Better-Answer Suggestions</h3>
+        <p>Get AI-generated model answers that show exactly how to improve your response.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>History Dashboard</h3>
+        <p>Track your progress across sessions, see score trends, and identify weak competencies.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>STAR Method Hints</h3>
+        <p>Built-in coaching hints for every question guide you through Situation, Task, Action, Result.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Feedback Reports</h3>
+        <p>Detailed post-session reports with competency breakdowns and actionable improvement tips.</p>
+      </div>
+    </div>
+
+    <div class="competencies-section">
+      <h2 class="section-title">Competencies Covered</h2>
+      <div class="competency-tags">
+        <span class="comp-tag leadership">Leadership</span>
+        <span class="comp-tag teamwork">Teamwork</span>
+        <span class="comp-tag problem">Problem Solving</span>
+        <span class="comp-tag communication">Communication</span>
+        <span class="comp-tag adaptability">Adaptability</span>
+        <span class="comp-tag conflict">Conflict Resolution</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRACTICE PAGE -->
+  <section id="page-practice" class="page">
+    <!-- Setup Form -->
+    <div id="setup-panel" class="panel">
+      <h2 class="panel-title">🎤 Start Your Practice Interview</h2>
+      <div class="setup-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" id="input-name" class="form-input" placeholder="e.g. Alex Johnson" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Target Job Role</label>
+            <input type="text" id="input-role" class="form-input" placeholder="e.g. Product Manager" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Number of Questions: <span id="q-count-label">5</span></label>
+          <input type="range" id="q-count" min="1" max="10" value="5" class="range-input"
+                 oninput="document.getElementById('q-count-label').textContent=this.value" />
+          <div class="range-labels"><span>1</span><span>10</span></div>
+        </div>
+        <button class="btn btn-primary btn-full" id="btn-start-session">🚀 Start Interview</button>
+        <div id="setup-error" class="error-msg hidden"></div>
+      </div>
+    </div>
+
+    <!-- Interview Panel -->
+    <div id="interview-panel" class="panel hidden">
+      <div class="interview-header">
+        <div class="progress-info">
+          <span id="q-progress">Question 1 of 5</span>
+          <span id="session-user"></span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="interview-body">
+        <div class="timer-wrap">
+          <div class="timer-ring">
+            <svg viewBox="0 0 100 100" class="timer-svg">
+              <circle cx="50" cy="50" r="45" class="timer-track"/>
+              <circle cx="50" cy="50" r="45" class="timer-fill" id="timer-circle"/>
+            </svg>
+            <div class="timer-text" id="timer-display">2:00</div>
+          </div>
+          <div class="timer-info">
+            <span class="timer-title">Time Remaining</span>
+            <span class="timer-sub">Answer using the STAR method</span>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <div class="question-meta">
+            <span class="badge badge-competency" id="q-competency">Leadership</span>
+            <span class="badge badge-difficulty" id="q-difficulty">MEDIUM</span>
+          </div>
+          <p class="question-text" id="question-text">Loading question...</p>
+
+          <div class="star-hints-toggle">
+            <button class="btn btn-ghost btn-sm" onclick="toggleHints()">💡 Show STAR Hints</button>
+          </div>
+          <div id="star-hints" class="star-hints hidden">
+            <div class="hint-item"><strong>S — Situation:</strong> <span id="hint-s"></span></div>
+            <div class="hint-item"><strong>T — Task:</strong> <span id="hint-t"></span></div>
+            <div class="hint-item"><strong>A — Action:</strong> <span id="hint-a"></span></div>
+            <div class="hint-item"><strong>R — Result:</strong> <span id="hint-r"></span></div>
+          </div>
+        </div>
+
+        <div class="answer-section">
+          <label class="form-label">Your Answer</label>
+          <textarea id="answer-input" class="answer-textarea"
+            placeholder="Use the STAR method: Situation → Task → Action → Result...&#10;&#10;Be specific — include numbers, timeframes, and measurable outcomes."></textarea>
+          <div class="answer-actions">
+            <span class="word-count" id="word-count">0 words</span>
+            <div class="answer-btns">
+              <button class="btn btn-secondary" id="btn-skip">⏭ Skip</button>
+              <button class="btn btn-primary" id="btn-submit">✅ Submit Answer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score Panel (shown after each answer) -->
+    <div id="score-panel" class="panel hidden">
+      <h2 class="panel-title">📊 Answer Scored</h2>
+      <div class="score-overview">
+        <div class="score-circle">
+          <svg viewBox="0 0 120 120" class="score-svg">
+            <circle cx="60" cy="60" r="54" class="score-track"/>
+            <circle cx="60" cy="60" r="54" class="score-fill" id="score-circle-fill"/>
+          </svg>
+          <div class="score-number" id="score-number">0</div>
+          <div class="score-band" id="score-band">—</div>
+        </div>
+        <div class="rubric-breakdown" id="rubric-breakdown"></div>
+      </div>
+      <div class="feedback-section">
+        <h3>💬 Feedback</h3>
+        <div class="feedback-box" id="feedback-text"></div>
+      </div>
+      <div class="better-answer-section" id="better-answer-section">
+        <h3>💡 Suggested Better Answer</h3>
+        <div class="better-answer-box" id="better-answer-text"></div>
+      </div>
+      <div class="score-actions">
+        <button class="btn btn-primary btn-lg" id="btn-next-question">Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Report Panel -->
+    <div id="report-panel" class="panel hidden">
+      <h2 class="panel-title">🏆 Interview Complete!</h2>
+      <div id="report-content"></div>
+      <div class="report-actions">
+        <button class="btn btn-primary" onclick="restartInterview()">🔄 Practice Again</button>
+        <button class="btn btn-secondary" onclick="showPage('history')">📈 View History</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY PAGE -->
+  <section id="page-history" class="page">
+    <h2 class="page-title">📈 History Dashboard</h2>
+    <div class="history-filter">
+      <input type="text" id="history-filter" class="form-input" placeholder="Filter by name..." style="max-width:300px"/>
+      <button class="btn btn-primary" onclick="loadHistory()">🔍 Search</button>
+    </div>
+    <div class="stats-grid" id="stats-grid"></div>
+    <div class="trend-section">
+      <h3>Score Trend</h3>
+      <canvas id="trend-chart" height="80"></canvas>
+    </div>
+    <div id="sessions-list" class="sessions-list"></div>
+  </section>
+
+
+</main>
+
+<!-- ── TOAST ─────────────────────────────────────────────────────────────────── -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

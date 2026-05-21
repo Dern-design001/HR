@@ -1,0 +1,641 @@
+================================================================================
+        HR INTERVIEW SIMULATOR — PROJECT REPORT
+        Project Code : PRJ-026
+        Category     : Interview Simulators
+        Domain       : Careers
+        Focus        : GenAI
+        Total Marks  : 45 / 45
+================================================================================
+
+TABLE OF CONTENTS
+-----------------
+1.  Project Overview
+2.  Features Used & How They Work
+3.  Technologies Used
+4.  Internal Structure
+5.  Process Flow (Step-by-Step)
+6.  API Endpoints
+7.  Scoring System — Detailed Analysis
+8.  Database Design
+9.  Vector Search System
+10. LLM Service & Mock Mode
+11. Frontend Architecture
+12. Test Coverage
+13. 3-Week Implementation Summary
+14. How to Run
+
+================================================================================
+1. PROJECT OVERVIEW
+================================================================================
+
+The HR Interview Simulator is a GenAI-powered behavioral interview practice
+platform. It allows users to practice answering behavioral interview questions
+using the STAR method (Situation, Task, Action, Result), receive instant
+rubric-based scores across 5 criteria, get AI-generated feedback, and track
+their progress over time through a history dashboard.
+
+The system works fully offline (no OpenAI key required) using a mock LLM mode,
+and can be upgraded to use real GPT models by adding an API key to the .env file.
+
+Key capabilities:
+  - 30+ behavioral questions across 6 competencies
+  - Timed answer flow with configurable countdown
+  - 5-criteria rubric scoring (weighted, 0-100 scale)
+  - AI-generated feedback and better-answer suggestions
+  - Session history with score trends
+  - Semantic question search (TF-IDF vector store)
+  - Full REST API with Swagger documentation
+  - Responsive HTML/CSS/JS frontend
+  - Streamlit alternative frontend
+
+
+================================================================================
+2. FEATURES USED & HOW THEY WORK
+================================================================================
+
+FEATURE 1 — QUESTION BANK
+--------------------------
+What it is:
+  A curated JSON database of 30+ behavioral interview questions organized
+  across 6 competency areas.
+
+Competencies covered:
+  - Leadership         (5 questions: L001–L005)
+  - Teamwork           (5 questions: T001–T005)
+  - Problem Solving    (5 questions: P001–P005)
+  - Communication      (5 questions: C001–C005)
+  - Adaptability       (5 questions: A001–A005)
+  - Conflict Resolution(5 questions: CR001–CR005)
+
+Each question contains:
+  - Unique ID (e.g. L001, T003)
+  - Question text
+  - Category (Behavioral)
+  - Difficulty level (easy / medium / hard)
+  - Competency tag
+  - STAR method hints (Situation, Task, Action, Result guidance)
+  - Follow-up questions (2 per question)
+  - Sample answer keywords for scoring reference
+
+How it works:
+  The QuestionService loads the JSON file at startup into memory.
+  Questions are indexed by ID for O(1) lookup.
+  Session question selection uses round-robin across competencies to ensure
+  diversity — no two questions from the same competency appear consecutively.
+
+--------------------------------------------------------------------------------
+
+FEATURE 2 — TIMED ANSWER FLOW
+------------------------------
+What it is:
+  Each question has a configurable countdown timer (default 120 seconds).
+  The timer is displayed as an animated SVG ring that changes color:
+    Green  = more than 60 seconds remaining
+    Orange = 30-60 seconds remaining
+    Red    = under 30 seconds remaining
+
+How it works:
+  Frontend: JavaScript setInterval() decrements the timer every second.
+  The SVG circle stroke-dashoffset is updated each tick to animate the ring.
+  When the user submits, elapsed time is calculated and sent to the backend
+  as time_taken (in seconds) with the answer payload.
+  Backend: The scoring service applies a time adjustment:
+    - Ideal range (60-180s): +2 points bonus
+    - Too fast (<30s):       -5 points penalty
+    - Too slow (>300s):      -3 points penalty
+
+--------------------------------------------------------------------------------
+
+FEATURE 3 — RUBRIC-BASED SCORING
+----------------------------------
+What it is:
+  Every submitted answer is evaluated against 5 weighted criteria.
+  The total score is on a 0-100 scale.
+
+Criteria and weights:
+  1. STAR Method        — 40% (max 40 points)
+  2. Specificity        — 20% (max 20 points)
+  3. Relevance          — 20% (max 20 points)
+  4. Communication      — 10% (max 10 points)
+  5. Self-Awareness     — 10% (max 10 points)
+
+Score bands:
+  85-100 = Excellent
+  70-84  = Good
+  55-69  = Average
+  40-54  = Below Average
+  0-39   = Poor
+
+How it works:
+  The ScoringService evaluates each criterion using keyword analysis,
+  pattern matching, and heuristics (detailed in Section 7).
+  Each criterion returns a raw score, which is summed and normalized to 100.
+  A time adjustment is then applied.
+  The LLM service generates a text feedback string based on the scores.
+
+
+FEATURE 4 — FEEDBACK REPORT
+-----------------------------
+What it is:
+  After completing all questions in a session, a full feedback report is
+  generated containing:
+    - Overall score (average of all answers)
+    - Duration in minutes
+    - Per-competency score breakdown
+    - Strengths (criteria scoring >= 70%)
+    - Areas to improve (criteria scoring < 60%)
+    - Per-question detail with rubric scores and feedback
+    - Better-answer suggestions for each question
+
+How it works:
+  The /reports/{session_id} endpoint queries all answers for the session,
+  calculates averages, groups scores by competency, and identifies strong
+  and weak criteria. The report is returned as a structured JSON object
+  and rendered in the frontend as a visual dashboard.
+
+--------------------------------------------------------------------------------
+
+FEATURE 5 — HISTORY DASHBOARD
+-------------------------------
+What it is:
+  A persistent record of all past interview sessions with:
+    - Session list (user, role, date, score, status)
+    - Aggregate stats (total sessions, avg score, best score, this week)
+    - Score trend chart (line graph of last 10 sessions)
+    - Filter by user name
+
+How it works:
+  All sessions are stored in SQLite via SQLAlchemy ORM.
+  The /history/sessions endpoint supports pagination and name filtering.
+  The /history/stats endpoint calculates aggregates in Python from DB records.
+  The frontend renders a canvas-based line chart using raw HTML5 Canvas API
+  (no external chart library needed).
+
+--------------------------------------------------------------------------------
+
+FEATURE 6 — BETTER-ANSWER SUGGESTIONS
+---------------------------------------
+What it is:
+  After each answer is scored, the system generates a model answer showing
+  the user exactly how to improve their response using the STAR method.
+
+How it works:
+  The LLMService.generate_better_answer() method is called with the original
+  question, the user's answer, and the rubric scores.
+  In mock mode: returns a pre-written STAR-structured template.
+  In real mode: sends a prompt to GPT asking it to rewrite the answer
+  using the STAR framework with specific metrics and reflection.
+
+--------------------------------------------------------------------------------
+
+FEATURE 7 — SEMANTIC QUESTION SEARCH (Vector Store)
+-----------------------------------------------------
+What it is:
+  Questions can be searched by semantic similarity — finding questions
+  related to a topic even if the exact words don't match.
+
+How it works:
+  At startup, all question texts are vectorized using TF-IDF (scikit-learn).
+  Queries are vectorized the same way and cosine similarity is computed
+  against all stored vectors using numpy.
+  Top-k most similar questions are returned.
+  If FAISS is installed, it uses FAISS IndexFlatL2 for faster search.
+  If sentence-transformers is available with a downloaded model, it uses
+  semantic embeddings instead of TF-IDF.
+
+
+================================================================================
+3. TECHNOLOGIES USED
+================================================================================
+
+BACKEND
+-------
+Technology       Version    Purpose
+---------------  ---------  ---------------------------------------------------
+Python           3.13.1     Core programming language
+FastAPI          0.111+     REST API framework — async, auto Swagger docs
+Uvicorn          0.29+      ASGI server to run FastAPI
+SQLAlchemy       2.0+       ORM for database models and queries
+SQLite           built-in   Lightweight relational database (no setup needed)
+Pydantic         2.7+       Data validation and serialization schemas
+pydantic-settings 2.2+      Environment variable management via .env file
+LangChain        0.2+       LLM orchestration framework
+langchain-openai 0.1+       OpenAI GPT integration via LangChain
+OpenAI           1.30+      GPT-3.5/4 API client
+scikit-learn     1.5+       TF-IDF vectorizer for question similarity search
+numpy            1.26+      Vector math for cosine similarity
+faiss-cpu        1.8+       (Optional) Fast vector similarity index
+sentence-transformers 3.0+  (Optional) Semantic embeddings — requires download
+
+FRONTEND (HTML/CSS/JS)
+----------------------
+Technology       Purpose
+---------------  ---------------------------------------------------
+HTML5            Page structure and semantic markup
+CSS3             Styling — CSS variables, Grid, Flexbox, animations
+Vanilla JS       All interactivity — no frameworks, no dependencies
+HTML5 Canvas     Score trend chart rendering
+SVG              Timer ring and score circle animations
+Google Fonts     Inter typeface (loaded from CDN)
+Fetch API        HTTP calls to the FastAPI backend
+
+FRONTEND (Streamlit)
+--------------------
+Technology       Purpose
+---------------  ---------------------------------------------------
+Streamlit        1.35+  Python-based web UI framework
+Pandas           2.2+   DataFrame for history/trend display
+Requests         2.32+  HTTP client to call FastAPI backend
+
+TESTING
+-------
+Technology       Purpose
+---------------  ---------------------------------------------------
+pytest           9.0+   Test runner
+httpx            0.27+  Async HTTP client for FastAPI TestClient
+FastAPI TestClient      In-process API testing without a real server
+unittest.mock           Mocking vector store to avoid model downloads
+
+
+================================================================================
+4. INTERNAL STRUCTURE
+================================================================================
+
+hr-interview-simulator/
+│
+├── backend/                          ← FastAPI application
+│   ├── __init__.py
+│   ├── main.py                       ← App entry point, lifespan, router registration
+│   ├── config.py                     ← Settings via pydantic-settings (.env support)
+│   │
+│   ├── data/
+│   │   ├── question_bank.json        ← 30 behavioral questions with STAR hints
+│   │   └── rubrics.json              ← 5 scoring rubrics with weights and guides
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── database.py               ← SQLAlchemy ORM models + engine + get_db()
+│   │   └── schemas.py                ← Pydantic request/response schemas
+│   │
+│   ├── routers/
+│   │   ├── __init__.py
+│   │   ├── sessions.py               ← POST /sessions/start, GET next-question, etc.
+│   │   ├── answers.py                ← POST /answers/{session_id}/submit
+│   │   ├── reports.py                ← GET /reports/{session_id}
+│   │   ├── history.py                ← GET /history/sessions, /history/stats
+│   │   └── questions.py              ← GET /questions/, POST /questions/generate
+│   │
+│   └── services/
+│       ├── __init__.py
+│       ├── llm_service.py            ← LangChain LLM + mock mode fallback
+│       ├── question_service.py       ← Load, filter, select, generate questions
+│       ├── scoring_service.py        ← 5-criteria rubric scoring engine
+│       └── vector_store.py           ← TF-IDF / FAISS semantic search index
+│
+├── frontend/
+│   ├── index.html                    ← Single-page HTML app (3 pages: Home/Practice/History)
+│   ├── style.css                     ← Full responsive stylesheet (CSS variables, Grid)
+│   ├── app.js                        ← All frontend logic (API calls, timer, charts)
+│   └── streamlit_app.py              ← Alternative Streamlit frontend
+│
+├── tests/
+│   ├── __init__.py
+│   ├── test_week1.py                 ← Data loading, question service, vector store
+│   ├── test_week2.py                 ← Scoring, LLM mock, edge cases
+│   └── test_week3.py                 ← End-to-end API tests (all endpoints)
+│
+├── requirements.txt                  ← All Python dependencies with versions
+├── .env.example                      ← Environment variable template
+├── run_backend.bat                   ← One-click backend start (Windows)
+├── run_streamlit.bat                 ← One-click Streamlit start (Windows)
+├── run_tests.bat                     ← One-click test runner (Windows)
+├── README.md                         ← Project documentation
+└── REPORT.txt                        ← This file
+
+DATABASE TABLES (SQLite — hr_simulator.db)
+------------------------------------------
+Table: interview_sessions
+  id                  TEXT PRIMARY KEY  (UUID)
+  user_name           TEXT
+  job_role            TEXT
+  start_time          DATETIME
+  end_time            DATETIME (nullable)
+  status              TEXT  (active / completed / abandoned)
+  question_count      INTEGER
+  current_question_index INTEGER
+  question_ids        TEXT  (JSON array of question IDs)
+  overall_score       REAL (nullable, set after report generation)
+
+Table: answers
+  id                  TEXT PRIMARY KEY  (UUID)
+  session_id          TEXT  (FK to interview_sessions)
+  question_id         TEXT
+  answer_text         TEXT
+  time_taken          INTEGER  (seconds)
+  score               REAL
+  rubric_scores       TEXT  (JSON array of rubric score objects)
+  feedback            TEXT
+  better_answer       TEXT
+  competency          TEXT
+  created_at          DATETIME
+
+Table: questions  (for custom/dynamic questions)
+  id                  TEXT PRIMARY KEY
+  text                TEXT
+  category            TEXT
+  difficulty          TEXT
+  competency          TEXT
+  follow_ups          TEXT  (JSON)
+  star_hints          TEXT  (JSON)
+  sample_answer_keywords TEXT (JSON)
+  is_custom           BOOLEAN
+  created_at          DATETIME
+
+
+================================================================================
+5. PROCESS FLOW (STEP-BY-STEP)
+================================================================================
+
+STARTUP SEQUENCE
+----------------
+1. Uvicorn starts the FastAPI ASGI application
+2. FastAPI lifespan() runs:
+   a. create_tables() — creates SQLite tables if they don't exist
+   b. question_service.load_questions() — reads question_bank.json into memory
+   c. vector_store_service.build_index() — vectorizes all question texts
+      using TF-IDF, builds cosine similarity index
+3. All 5 routers are registered under /api/v1/
+4. CORS middleware is applied (allows all origins for local dev)
+5. Server is ready at http://0.0.0.0:8000
+
+--------------------------------------------------------------------------------
+
+INTERVIEW SESSION FLOW
+-----------------------
+
+STEP 1 — USER OPENS FRONTEND
+  Browser loads index.html → style.css → app.js
+  JavaScript calls showPage('home') → Home page renders
+  User clicks "Start Practice"
+
+STEP 2 — SESSION SETUP
+  User enters: Name, Job Role, Number of Questions (1-10)
+  User clicks "Start Interview"
+  JS calls: POST /api/v1/sessions/start
+    Payload: { user_name, job_role, question_count }
+
+STEP 3 — BACKEND CREATES SESSION
+  sessions.py router receives request
+  question_service.get_random_session_questions() selects questions:
+    - Groups all questions by competency
+    - Round-robins through competencies to ensure diversity
+    - Shuffles final selection
+  Creates DBInterviewSession record in SQLite
+  Returns: session_id, question_ids[], status="active"
+
+STEP 4 — FIRST QUESTION LOADS
+  JS calls: GET /api/v1/sessions/{session_id}/next-question
+  Backend reads current_question_index from DB (starts at 0)
+  Looks up question_ids[0] in question_service.questions_by_id
+  Returns: question object + STAR hints + time_limit + question_number
+
+  Frontend renders:
+    - Progress bar (1 of N)
+    - Question text
+    - Competency and difficulty badges
+    - STAR hints (hidden, toggle to show)
+    - Answer textarea
+    - Timer starts counting down
+
+STEP 5 — USER ANSWERS
+  User types answer in textarea
+  Word count updates live (JS input event listener)
+  Timer counts down (SVG ring animates)
+  User clicks "Submit Answer"
+
+STEP 6 — ANSWER SUBMISSION & SCORING
+  JS calls: POST /api/v1/answers/{session_id}/submit
+    Payload: { question_id, answer_text, time_taken }
+
+  answers.py router:
+    a. Validates session exists and is active
+    b. Validates question exists in question bank
+    c. Calls scoring_service.score_answer(question, answer_text, time_taken)
+    d. Calls llm_service.generate_better_answer(question, answer, rubric_scores)
+    e. Saves DBAnswer record to SQLite
+    f. Increments session.current_question_index
+    g. Returns full AnswerScore object
+
+STEP 7 — SCORE DISPLAY
+  Frontend receives score response
+  Renders animated score circle (SVG stroke-dashoffset animation)
+  Renders rubric breakdown bars (5 criteria with progress bars)
+  Displays feedback text
+  Displays better-answer suggestion
+  Shows "Next Question" button
+
+STEP 8 — REPEAT FOR ALL QUESTIONS
+  Steps 4-7 repeat for each question
+  Progress bar advances each time
+
+STEP 9 — SESSION COMPLETION
+  After last question is answered:
+  JS calls: POST /api/v1/sessions/{session_id}/complete
+  Backend sets status="completed", end_time=now()
+  JS calls: GET /api/v1/reports/{session_id}
+
+STEP 10 — REPORT GENERATION
+  reports.py router:
+    a. Fetches all answers for the session
+    b. Calculates overall_score = average of all answer scores
+    c. Updates session.overall_score in DB
+    d. Groups scores by competency
+    e. Identifies strengths (criteria avg >= 70%) and improvements (< 60%)
+    f. Collects better_answer suggestions
+    g. Returns FeedbackReport object
+
+  Frontend renders:
+    - Big score number with color coding
+    - Score band label (Excellent/Good/Average/etc.)
+    - 3 metric cards (questions, duration, role)
+    - Competency score grid
+    - Strengths and improvements panels
+    - Per-question expandable details
+
+
+================================================================================
+6. API ENDPOINTS — COMPLETE REFERENCE
+================================================================================
+
+BASE URL: http://localhost:8000/api/v1
+
+METHOD  ENDPOINT                                    DESCRIPTION
+------  ------------------------------------------  ---------------------------
+GET     /                                           Root — app info
+GET     /health                                     Health check + stats
+
+SESSIONS
+GET     /sessions/{id}                              Get session details
+GET     /sessions/{id}/status                       Progress (index, elapsed)
+GET     /sessions/{id}/next-question                Get current question
+POST    /sessions/start                             Create new session
+POST    /sessions/{id}/complete                     Mark session complete
+POST    /sessions/{id}/abandon                      Mark session abandoned
+
+ANSWERS
+POST    /answers/{session_id}/submit                Submit answer, get score
+GET     /answers/{session_id}/all                   All answers for session
+GET     /answers/{session_id}/follow-up/{q_id}      Get follow-up question
+
+REPORTS
+GET     /reports/{session_id}                       Full feedback report
+
+HISTORY
+GET     /history/sessions                           Paginated session list
+GET     /history/stats                              Aggregate statistics
+DELETE  /history/sessions/{session_id}              Delete session + answers
+
+QUESTIONS
+GET     /questions/                                 List questions (filterable)
+GET     /questions/{id}                             Single question by ID
+GET     /questions/meta/competencies                All competency names
+GET     /questions/search/similar?query=...         Semantic search
+POST    /questions/generate                         Generate dynamic question
+
+DOCS
+GET     /docs                                       Swagger UI
+GET     /redoc                                      ReDoc documentation
+
+
+================================================================================
+7. SCORING SYSTEM — DETAILED ANALYSIS
+================================================================================
+
+The ScoringService evaluates every answer using 5 independent criteria.
+Each criterion uses a different analysis technique.
+
+--------------------------------------------------------------------------------
+CRITERION 1: STAR METHOD (Weight: 40%, Max: 40 points)
+--------------------------------------------------------------------------------
+Purpose: Checks if the answer follows the Situation-Task-Action-Result structure.
+
+How it works:
+  The rubrics.json defines keyword lists for each STAR component:
+
+  Situation keywords: "when", "at", "during", "while", "working at",
+                      "in my role", "the project", "the team"
+  Task keywords:      "my responsibility", "I was tasked", "I needed to",
+                      "my goal was", "I had to", "my role was"
+  Action keywords:    "I did", "I implemented", "I created", "I led",
+                      "I communicated", "I decided", "I built", "I organized"
+  Result keywords:    "as a result", "which led to", "the outcome was",
+                      "we achieved", "increased", "decreased", "improved",
+                      "saved", "delivered", "reduced", "percent", "%"
+
+  Scoring logic:
+    - Each component scores 0-10 based on keyword hits (hits × 2.5, max 10)
+    - If ALL 4 components have at least 1 hit: +5 bonus points
+    - Total capped at 40
+
+  Score interpretation:
+    32-40 = Excellent STAR structure
+    24-31 = Good, result component needs strengthening
+    16-23 = Partial, missing components
+    0-15  = STAR method largely absent
+
+--------------------------------------------------------------------------------
+CRITERION 2: SPECIFICITY (Weight: 20%, Max: 20 points)
+--------------------------------------------------------------------------------
+Purpose: Checks if the answer uses concrete details vs. vague generalities.
+
+How it works:
+  Positive signals (regex patterns, each hit = +4 points):
+    - Percentages:        \d+%
+    - Dollar amounts:     \$[\d,]+
+    - Team/time sizes:    \d+ (people|weeks|months|days|hours)
+    - Month names:        january, february, ... december
+    - Quarters:           q1, q2, q3, q4, quarter, fiscal year
+    - Years:              \d{4}
+    - Quantified change:  (increased|decreased|reduced) by \d+
+
+  Negative signals (each hit = -2 points):
+    - Vague words: usually, sometimes, often, generally, typically,
+                   kind of, sort of, basically, pretty much
+
+  Length bonus: word_count / 40, capped at +5 points
+  Final score: clamped to range [2, 20]
+
+--------------------------------------------------------------------------------
+CRITERION 3: RELEVANCE (Weight: 20%, Max: 20 points)
+--------------------------------------------------------------------------------
+Purpose: Checks if the answer actually addresses the question asked.
+
+How it works:
+  1. Extract meaningful words from the question (remove stop words)
+  2. Extract meaningful words from the answer (remove stop words)
+  3. Calculate overlap ratio: |question_words ∩ answer_words| / |question_words|
+  4. Score = overlap_ratio × 20
+  5. Floor: if answer > 50 words, minimum score is 8 (assumes some relevance)
+  6. Capped at 20
+
+  Stop words removed: a, an, the, and, or, but, in, on, at, to, for, of,
+                      with, by, from, is, was, were, are, have, had, has,
+                      do, did, does, me, you, we, tell, describe, give,
+                      example, time, when, how
+
+--------------------------------------------------------------------------------
+CRITERION 4: COMMUNICATION CLARITY (Weight: 10%, Max: 10 points)
+--------------------------------------------------------------------------------
+Purpose: Evaluates structure, sentence length, and coherence.
+
+How it works:
+  Sentence splitting: split on [.!?]
+
+  Average sentence length scoring:
+    10-30 words per sentence = 4.0 points (ideal)
+    5-9 or 31-50 words       = 2.5 points
+    <5 or >50 words          = 1.0 points
+
+  Sentence count scoring:
+    4-20 sentences = 3.0 points (ideal for behavioral answer)
+    2-3 sentences  = 1.5 points
+    <2 sentences   = 0.5 points
+
+  Filler word penalty (-0.5 per occurrence, max -2):
+    Filler words: um, uh, like, you know, basically, literally
+
+  Base score: 3.0 (for attempting the question)
+  Final: length_score + count_score + 3.0 - filler_penalty, clamped [1, 10]
+
+--------------------------------------------------------------------------------
+CRITERION 5: SELF-AWARENESS (Weight: 10%, Max: 10 points)
+--------------------------------------------------------------------------------
+Purpose: Checks for reflection, learning, and growth mindset.
+
+How it works:
+  Reflection keyword list (each hit = +2.5 points):
+    "i learned", "i realized", "looking back", "in hindsight",
+    "i would do differently", "i grew", "i improved", "i recognized",
+    "i reflected", "taught me", "lesson", "mistake", "challenge",
+    "difficult", "struggled", "overcame", "growth"
+
+  Base score: 2.0 (for attempting the question at all)
+  Final: min(10.0, hits × 2.5 + 2.0)
+
+--------------------------------------------------------------------------------
+OVERALL SCORE CALCULATION
+--------------------------------------------------------------------------------
+  overall = (sum of all criterion scores / sum of max scores) × 100
+  time_adjustment applied: +2 (ideal), -5 (too fast), -3 (too slow)
+  Final score clamped to [0, 100]
+
+  Example:
+    STAR:          32.0 / 40.0
+    Specificity:   14.0 / 20.0
+    Relevance:     16.0 / 20.0
+    Clarity:        8.0 / 10.0
+    Self-Awareness: 7.5 / 10.0
+    Raw total:     77.5 / 100.0 = 77.5%
+    Time bonus:    +2.0 (answered in 95 seconds)
+    Final score:   79.5 / 100
+

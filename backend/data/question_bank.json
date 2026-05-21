@@ -1,0 +1,544 @@
+{
+  "questions": [
+    {
+      "id": "L001",
+      "text": "Tell me about a time when you had to lead a team through a difficult project. What was your approach?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Leadership",
+      "follow_up_questions": [
+        "How did you handle team members who were resistant to your direction?",
+        "What would you do differently if you faced the same situation today?"
+      ],
+      "star_hints": {
+        "situation": "Describe the project context, team size, and what made it difficult.",
+        "task": "Explain your role and what you were responsible for delivering.",
+        "action": "Detail the specific steps you took to lead the team — communication, delegation, motivation.",
+        "result": "Share measurable outcomes: delivery timeline, team morale, business impact."
+      },
+      "sample_answer_keywords": ["delegated", "motivated", "communicated", "deadline", "delivered", "team", "challenge", "strategy", "outcome", "milestone"]
+    },
+    {
+      "id": "L002",
+      "text": "Describe a situation where you had to make an unpopular decision. How did you handle the pushback?",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Leadership",
+      "follow_up_questions": [
+        "How did you communicate the decision to stakeholders?",
+        "Looking back, do you think it was the right call?"
+      ],
+      "star_hints": {
+        "situation": "Set the scene — what was the context and why was the decision controversial?",
+        "task": "What was your responsibility in making this decision?",
+        "action": "How did you communicate, justify, and implement the decision despite opposition?",
+        "result": "What happened as a result? Did the decision prove correct over time?"
+      },
+      "sample_answer_keywords": ["decision", "stakeholders", "communicated", "justified", "data", "outcome", "trust", "transparent", "accountability"]
+    },
+    {
+      "id": "L003",
+      "text": "Give me an example of a time you mentored or coached a junior team member to improve their performance.",
+      "category": "Behavioral",
+      "difficulty": "easy",
+      "competency": "Leadership",
+      "follow_up_questions": [
+        "How did you tailor your coaching style to that individual?",
+        "What was the most rewarding part of the mentoring experience?"
+      ],
+      "star_hints": {
+        "situation": "Who was the person and what performance gap existed?",
+        "task": "What was your goal in mentoring them?",
+        "action": "What specific coaching techniques, feedback sessions, or resources did you provide?",
+        "result": "How did their performance improve? Any measurable change?"
+      },
+      "sample_answer_keywords": ["mentored", "coached", "feedback", "growth", "improved", "one-on-one", "goals", "progress", "development"]
+    },
+    {
+      "id": "L004",
+      "text": "Tell me about a time you had to influence people without having direct authority over them.",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Leadership",
+      "follow_up_questions": [
+        "What tactics did you use to build buy-in?",
+        "How did you handle someone who refused to cooperate?"
+      ],
+      "star_hints": {
+        "situation": "Describe the cross-functional or peer situation.",
+        "task": "What outcome were you trying to achieve?",
+        "action": "How did you build relationships, present your case, and gain alignment?",
+        "result": "Did you achieve the goal? What was the impact?"
+      },
+      "sample_answer_keywords": ["influence", "persuade", "stakeholders", "alignment", "collaboration", "buy-in", "relationship", "trust", "outcome"]
+    },
+    {
+      "id": "L005",
+      "text": "Describe a time when you had to set a vision or direction for your team. How did you get everyone aligned?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Leadership",
+      "follow_up_questions": [
+        "How did you handle team members who had a different vision?",
+        "How did you measure whether the team was aligned?"
+      ],
+      "star_hints": {
+        "situation": "What was the context — new project, team restructure, strategic shift?",
+        "task": "What vision did you need to establish and why?",
+        "action": "How did you communicate, involve the team, and create shared ownership?",
+        "result": "How did alignment manifest? What was the outcome?"
+      },
+      "sample_answer_keywords": ["vision", "aligned", "communicated", "roadmap", "goals", "team", "strategy", "buy-in", "direction"]
+    },
+    {
+      "id": "T001",
+      "text": "Tell me about a time you worked on a high-performing team. What made it successful?",
+      "category": "Behavioral",
+      "difficulty": "easy",
+      "competency": "Teamwork",
+      "follow_up_questions": [
+        "What was your specific contribution to the team's success?",
+        "How would you replicate that team dynamic in a new environment?"
+      ],
+      "star_hints": {
+        "situation": "Describe the team, project, and context.",
+        "task": "What was the team's goal and your role?",
+        "action": "What behaviors, practices, or dynamics made the team effective?",
+        "result": "What did the team achieve? What was the measurable impact?"
+      },
+      "sample_answer_keywords": ["collaboration", "trust", "communication", "roles", "shared goals", "accountability", "support", "delivered", "synergy"]
+    },
+    {
+      "id": "T002",
+      "text": "Describe a situation where you had to work with a difficult team member. How did you handle it?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Teamwork",
+      "follow_up_questions": [
+        "Did the relationship improve over time?",
+        "What did you learn about yourself from that experience?"
+      ],
+      "star_hints": {
+        "situation": "Who was the difficult person and what made them challenging?",
+        "task": "What did you need to accomplish together?",
+        "action": "How did you approach the relationship — direct conversation, empathy, escalation?",
+        "result": "What was the outcome for the project and the relationship?"
+      },
+      "sample_answer_keywords": ["empathy", "direct", "conversation", "understanding", "compromise", "professional", "resolved", "collaboration"]
+    },
+    {
+      "id": "T003",
+      "text": "Give me an example of a time you had to put the team's needs above your own preferences.",
+      "category": "Behavioral",
+      "difficulty": "easy",
+      "competency": "Teamwork",
+      "follow_up_questions": [
+        "How did you feel about making that sacrifice?",
+        "Would you make the same choice again?"
+      ],
+      "star_hints": {
+        "situation": "What was the team situation and what personal preference did you set aside?",
+        "task": "What was the team trying to achieve?",
+        "action": "What did you do and how did you communicate your decision?",
+        "result": "How did it benefit the team? What was the outcome?"
+      },
+      "sample_answer_keywords": ["team first", "sacrifice", "compromise", "collective", "priority", "support", "outcome", "benefit"]
+    },
+    {
+      "id": "T004",
+      "text": "Tell me about a time you had to collaborate with a remote or cross-functional team.",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Teamwork",
+      "follow_up_questions": [
+        "What tools or processes did you use to stay aligned?",
+        "What was the biggest challenge of working remotely/cross-functionally?"
+      ],
+      "star_hints": {
+        "situation": "Describe the team composition, location, and project.",
+        "task": "What was your role and the shared goal?",
+        "action": "How did you communicate, coordinate, and overcome distance/silo challenges?",
+        "result": "What did the team deliver? How effective was the collaboration?"
+      },
+      "sample_answer_keywords": ["remote", "cross-functional", "communication", "tools", "async", "aligned", "delivered", "coordination", "timezone"]
+    },
+    {
+      "id": "T005",
+      "text": "Describe a time when you helped a struggling team member without being asked.",
+      "category": "Behavioral",
+      "difficulty": "easy",
+      "competency": "Teamwork",
+      "follow_up_questions": [
+        "How did you notice they were struggling?",
+        "How did they respond to your help?"
+      ],
+      "star_hints": {
+        "situation": "Who was struggling and what were the signs?",
+        "task": "What did you want to achieve by helping?",
+        "action": "What specific help did you offer — time, knowledge, emotional support?",
+        "result": "How did it impact them and the team's overall performance?"
+      },
+      "sample_answer_keywords": ["proactive", "noticed", "offered", "support", "helped", "team", "empathy", "outcome", "morale"]
+    },
+    {
+      "id": "P001",
+      "text": "Tell me about the most complex problem you've ever solved at work. Walk me through your process.",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Problem Solving",
+      "follow_up_questions": [
+        "What data or information did you use to diagnose the problem?",
+        "Were there any solutions you considered but rejected? Why?"
+      ],
+      "star_hints": {
+        "situation": "What was the problem and why was it complex?",
+        "task": "What was your responsibility in solving it?",
+        "action": "Walk through your analytical process — how did you break it down, gather data, evaluate options?",
+        "result": "What was the solution and its impact?"
+      },
+      "sample_answer_keywords": ["analyzed", "root cause", "data", "options", "evaluated", "implemented", "solved", "impact", "systematic", "framework"]
+    },
+    {
+      "id": "P002",
+      "text": "Describe a time when you had to solve a problem with limited resources or information.",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Problem Solving",
+      "follow_up_questions": [
+        "How did you decide when you had enough information to act?",
+        "What would you have done differently with more resources?"
+      ],
+      "star_hints": {
+        "situation": "What was the constraint — time, budget, data, people?",
+        "task": "What needed to be solved despite the constraints?",
+        "action": "How did you prioritize, improvise, or find creative solutions?",
+        "result": "What was the outcome? How effective was your solution?"
+      },
+      "sample_answer_keywords": ["constraints", "creative", "prioritized", "resourceful", "improvised", "workaround", "outcome", "efficient"]
+    },
+    {
+      "id": "P003",
+      "text": "Give me an example of a time you identified a problem before it became critical. What did you do?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Problem Solving",
+      "follow_up_questions": [
+        "How did you convince others that the problem was worth addressing?",
+        "What early warning signs did you notice?"
+      ],
+      "star_hints": {
+        "situation": "What was the potential problem and how did you spot it early?",
+        "task": "What was your role in addressing it proactively?",
+        "action": "What steps did you take to prevent escalation?",
+        "result": "What was prevented? What was the impact of your early action?"
+      },
+      "sample_answer_keywords": ["proactive", "identified", "early", "prevented", "risk", "monitoring", "escalation", "impact", "foresight"]
+    },
+    {
+      "id": "P004",
+      "text": "Tell me about a time when your first solution to a problem didn't work. What did you do next?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Problem Solving",
+      "follow_up_questions": [
+        "How did you stay motivated after the initial failure?",
+        "What did you learn from the failed approach?"
+      ],
+      "star_hints": {
+        "situation": "What was the problem and what was your initial approach?",
+        "task": "What were you trying to achieve?",
+        "action": "How did you pivot — what did you learn from the failure and what did you try next?",
+        "result": "Did the second approach work? What was the final outcome?"
+      },
+      "sample_answer_keywords": ["pivot", "learned", "iterated", "resilient", "adapted", "second approach", "failure", "persisted", "outcome"]
+    },
+    {
+      "id": "P005",
+      "text": "Describe a time you used data or analytics to solve a business problem.",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Problem Solving",
+      "follow_up_questions": [
+        "What data sources did you use?",
+        "How did you present your findings to non-technical stakeholders?"
+      ],
+      "star_hints": {
+        "situation": "What was the business problem and why was data needed?",
+        "task": "What analysis were you responsible for?",
+        "action": "What data did you gather, how did you analyze it, and what insights did you find?",
+        "result": "What decision was made based on your analysis? What was the impact?"
+      },
+      "sample_answer_keywords": ["data", "analysis", "metrics", "insights", "decision", "evidence", "quantified", "dashboard", "trend", "impact"]
+    },
+    {
+      "id": "C001",
+      "text": "Tell me about a time you had to explain a complex technical concept to a non-technical audience.",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Communication",
+      "follow_up_questions": [
+        "How did you know your audience understood?",
+        "What analogies or visuals did you use?"
+      ],
+      "star_hints": {
+        "situation": "Who was the audience and what was the complex concept?",
+        "task": "What did you need them to understand or decide?",
+        "action": "How did you simplify, use analogies, visuals, or storytelling?",
+        "result": "Did they understand? What decision or action followed?"
+      },
+      "sample_answer_keywords": ["simplified", "analogy", "visual", "audience", "understood", "clear", "jargon-free", "feedback", "engaged"]
+    },
+    {
+      "id": "C002",
+      "text": "Describe a situation where miscommunication caused a problem. How did you resolve it?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Communication",
+      "follow_up_questions": [
+        "What could you have done to prevent the miscommunication?",
+        "How did you rebuild trust after the misunderstanding?"
+      ],
+      "star_hints": {
+        "situation": "What was the miscommunication and what caused it?",
+        "task": "What needed to be resolved?",
+        "action": "How did you clarify, address the misunderstanding, and repair the situation?",
+        "result": "What was the outcome? What process changes did you make?"
+      },
+      "sample_answer_keywords": ["clarified", "misunderstanding", "resolved", "transparent", "follow-up", "documented", "process", "prevented"]
+    },
+    {
+      "id": "C003",
+      "text": "Give me an example of a time you had to deliver difficult feedback to someone. How did you approach it?",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Communication",
+      "follow_up_questions": [
+        "How did the person react to the feedback?",
+        "What framework do you use for delivering difficult feedback?"
+      ],
+      "star_hints": {
+        "situation": "Who needed the feedback and what was the issue?",
+        "task": "What outcome were you hoping to achieve with the feedback?",
+        "action": "How did you prepare, frame, and deliver the feedback constructively?",
+        "result": "How did they respond? Did their behavior change?"
+      },
+      "sample_answer_keywords": ["constructive", "specific", "empathy", "private", "behavior", "impact", "improvement", "follow-up", "SBI model"]
+    },
+    {
+      "id": "C004",
+      "text": "Tell me about a time you had to present to senior leadership or executives. How did you prepare?",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Communication",
+      "follow_up_questions": [
+        "How did you handle tough questions from the executives?",
+        "What would you do differently next time?"
+      ],
+      "star_hints": {
+        "situation": "What was the presentation about and who was the audience?",
+        "task": "What did you need to achieve with the presentation?",
+        "action": "How did you structure, prepare, and rehearse? How did you tailor to executives?",
+        "result": "What was the outcome? Did you achieve your goal?"
+      },
+      "sample_answer_keywords": ["executive", "prepared", "structured", "concise", "data-driven", "questions", "confident", "outcome", "decision"]
+    },
+    {
+      "id": "C005",
+      "text": "Describe a time when you had to actively listen to understand someone's perspective before responding.",
+      "category": "Behavioral",
+      "difficulty": "easy",
+      "competency": "Communication",
+      "follow_up_questions": [
+        "What techniques do you use to ensure you're truly listening?",
+        "How did active listening change your response?"
+      ],
+      "star_hints": {
+        "situation": "What was the conversation and why was listening important?",
+        "task": "What did you need to understand?",
+        "action": "What active listening techniques did you use — paraphrasing, questions, silence?",
+        "result": "How did your understanding change? What was the outcome?"
+      },
+      "sample_answer_keywords": ["listened", "paraphrased", "understood", "empathy", "perspective", "clarified", "responded", "connection"]
+    },
+    {
+      "id": "A001",
+      "text": "Tell me about a time you had to adapt quickly to a major change at work. How did you handle it?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Adaptability",
+      "follow_up_questions": [
+        "What was the hardest part of adapting to the change?",
+        "How did you help others adapt as well?"
+      ],
+      "star_hints": {
+        "situation": "What was the change — restructure, new technology, strategy shift?",
+        "task": "What did you need to adapt to and why was it challenging?",
+        "action": "How did you approach the change — learning, mindset shift, seeking help?",
+        "result": "How well did you adapt? What was the outcome?"
+      },
+      "sample_answer_keywords": ["adapted", "flexible", "learned", "embraced", "change", "resilient", "positive", "outcome", "growth mindset"]
+    },
+    {
+      "id": "A002",
+      "text": "Describe a time when your priorities changed suddenly. How did you manage the shift?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Adaptability",
+      "follow_up_questions": [
+        "How did you communicate the priority change to your team?",
+        "What did you have to deprioritize and how did you decide?"
+      ],
+      "star_hints": {
+        "situation": "What caused the sudden priority change?",
+        "task": "What new priority needed your attention?",
+        "action": "How did you re-plan, communicate, and execute the shift?",
+        "result": "What was the outcome? How did you manage competing demands?"
+      },
+      "sample_answer_keywords": ["reprioritized", "communicated", "flexible", "managed", "stakeholders", "trade-offs", "delivered", "agile"]
+    },
+    {
+      "id": "A003",
+      "text": "Give me an example of a time you had to learn a new skill or technology quickly to complete a project.",
+      "category": "Behavioral",
+      "difficulty": "easy",
+      "competency": "Adaptability",
+      "follow_up_questions": [
+        "What resources did you use to learn quickly?",
+        "How did you apply the new skill under pressure?"
+      ],
+      "star_hints": {
+        "situation": "What skill was needed and what was the timeline?",
+        "task": "What did you need to deliver using this new skill?",
+        "action": "How did you learn — courses, mentors, practice, documentation?",
+        "result": "How well did you apply the skill? What was the project outcome?"
+      },
+      "sample_answer_keywords": ["learned", "self-taught", "resources", "applied", "quickly", "delivered", "growth", "initiative", "outcome"]
+    },
+    {
+      "id": "A004",
+      "text": "Tell me about a time you worked in an ambiguous situation with unclear requirements. How did you proceed?",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Adaptability",
+      "follow_up_questions": [
+        "How did you decide when to ask for clarification vs. proceed independently?",
+        "What assumptions did you make and how did you validate them?"
+      ],
+      "star_hints": {
+        "situation": "What was ambiguous — requirements, goals, ownership?",
+        "task": "What did you need to deliver despite the ambiguity?",
+        "action": "How did you clarify, make assumptions, and move forward?",
+        "result": "What did you deliver? How did stakeholders respond?"
+      },
+      "sample_answer_keywords": ["ambiguous", "clarified", "assumptions", "proactive", "structured", "delivered", "stakeholders", "aligned", "outcome"]
+    },
+    {
+      "id": "A005",
+      "text": "Describe a time when a project you were working on changed direction significantly. How did you respond?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Adaptability",
+      "follow_up_questions": [
+        "How did you manage the emotional impact of the change?",
+        "What did you do to get the team re-energized?"
+      ],
+      "star_hints": {
+        "situation": "What was the original direction and what changed?",
+        "task": "What was your role in navigating the change?",
+        "action": "How did you pivot — re-planning, communication, team motivation?",
+        "result": "What was the outcome of the new direction?"
+      },
+      "sample_answer_keywords": ["pivoted", "adapted", "re-planned", "communicated", "team", "positive", "outcome", "resilient", "flexible"]
+    },
+    {
+      "id": "CR001",
+      "text": "Tell me about a time you had a conflict with a colleague. How did you resolve it?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Conflict Resolution",
+      "follow_up_questions": [
+        "What did you learn about yourself from that conflict?",
+        "How has your approach to conflict changed since then?"
+      ],
+      "star_hints": {
+        "situation": "What was the conflict about and who was involved?",
+        "task": "What did you need to resolve?",
+        "action": "How did you approach the conversation — direct, empathetic, structured?",
+        "result": "Was the conflict resolved? What was the relationship outcome?"
+      },
+      "sample_answer_keywords": ["direct", "empathy", "conversation", "perspective", "resolved", "compromise", "professional", "relationship", "outcome"]
+    },
+    {
+      "id": "CR002",
+      "text": "Describe a time when you had to mediate a conflict between two team members.",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Conflict Resolution",
+      "follow_up_questions": [
+        "How did you remain neutral during the mediation?",
+        "What would you do differently if the conflict escalated?"
+      ],
+      "star_hints": {
+        "situation": "What was the conflict between the team members?",
+        "task": "What was your role as mediator?",
+        "action": "How did you facilitate the conversation and find common ground?",
+        "result": "Was the conflict resolved? How did it affect team dynamics?"
+      },
+      "sample_answer_keywords": ["mediated", "neutral", "facilitated", "listened", "common ground", "resolved", "team", "professional", "outcome"]
+    },
+    {
+      "id": "CR003",
+      "text": "Give me an example of a time you disagreed with your manager's decision. How did you handle it?",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Conflict Resolution",
+      "follow_up_questions": [
+        "How did you decide when to push back vs. accept the decision?",
+        "What was the outcome of your disagreement?"
+      ],
+      "star_hints": {
+        "situation": "What was the decision and why did you disagree?",
+        "task": "What did you want to achieve by raising your concern?",
+        "action": "How did you communicate your disagreement — respectfully, with data, privately?",
+        "result": "What happened? Did the decision change? How did it affect your relationship?"
+      },
+      "sample_answer_keywords": ["respectful", "data", "private", "perspective", "listened", "outcome", "professional", "relationship", "disagree"]
+    },
+    {
+      "id": "CR004",
+      "text": "Tell me about a time when you had to deal with a customer or stakeholder complaint. How did you handle it?",
+      "category": "Behavioral",
+      "difficulty": "medium",
+      "competency": "Conflict Resolution",
+      "follow_up_questions": [
+        "How did you manage your emotions during the complaint?",
+        "What process changes did you make to prevent similar complaints?"
+      ],
+      "star_hints": {
+        "situation": "What was the complaint and who was the stakeholder?",
+        "task": "What did you need to resolve?",
+        "action": "How did you listen, acknowledge, and address the complaint?",
+        "result": "Was the stakeholder satisfied? What was the outcome?"
+      },
+      "sample_answer_keywords": ["listened", "acknowledged", "empathy", "resolved", "follow-up", "satisfied", "process", "prevented", "professional"]
+    },
+    {
+      "id": "CR005",
+      "text": "Describe a time when competing priorities between teams caused tension. How did you navigate it?",
+      "category": "Behavioral",
+      "difficulty": "hard",
+      "competency": "Conflict Resolution",
+      "follow_up_questions": [
+        "How did you get both teams to agree on a solution?",
+        "What governance or process did you put in place to prevent future conflicts?"
+      ],
+      "star_hints": {
+        "situation": "What were the competing priorities and which teams were involved?",
+        "task": "What needed to be resolved and what was at stake?",
+        "action": "How did you facilitate alignment — meetings, escalation, compromise?",
+        "result": "What was agreed upon? What was the business outcome?"
+      },
+      "sample_answer_keywords": ["aligned", "facilitated", "compromise", "stakeholders", "escalated", "resolved", "process", "governance", "outcome"]
+    }
+  ]
+}
